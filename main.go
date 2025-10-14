@@ -1,3 +1,5 @@
+// Package main is the entry point for the 3x-ui web panel application.
+// It initializes the database, web server, and handles command-line operations for managing the panel.
 package main
 
 import (
@@ -9,19 +11,20 @@ import (
 	"syscall"
 	_ "unsafe"
 
-	"x-ui/config"
-	"x-ui/database"
-	"x-ui/logger"
-	"x-ui/sub"
-	"x-ui/util/crypto"
-	"x-ui/web"
-	"x-ui/web/global"
-	"x-ui/web/service"
+	"github.com/mhsanaei/3x-ui/v2/config"
+	"github.com/mhsanaei/3x-ui/v2/database"
+	"github.com/mhsanaei/3x-ui/v2/logger"
+	"github.com/mhsanaei/3x-ui/v2/sub"
+	"github.com/mhsanaei/3x-ui/v2/util/crypto"
+	"github.com/mhsanaei/3x-ui/v2/web"
+	"github.com/mhsanaei/3x-ui/v2/web/global"
+	"github.com/mhsanaei/3x-ui/v2/web/service"
 
 	"github.com/joho/godotenv"
 	"github.com/op/go-logging"
 )
 
+// runWebServer initializes and starts the web server for the 3x-ui panel.
 func runWebServer() {
 	log.Printf("Starting %v %v", config.GetName(), config.GetVersion())
 
@@ -32,7 +35,7 @@ func runWebServer() {
 		logger.InitLogger(logging.INFO)
 	case config.Notice:
 		logger.InitLogger(logging.NOTICE)
-	case config.Warn:
+	case config.Warning:
 		logger.InitLogger(logging.WARNING)
 	case config.Error:
 		logger.InitLogger(logging.ERROR)
@@ -112,6 +115,7 @@ func runWebServer() {
 	}
 }
 
+// resetSetting resets all panel settings to their default values.
 func resetSetting() {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
@@ -128,6 +132,7 @@ func resetSetting() {
 	}
 }
 
+// showSetting displays the current panel settings if show is true.
 func showSetting(show bool) {
 	if show {
 		settingService := service.SettingService{}
@@ -177,6 +182,7 @@ func showSetting(show bool) {
 	}
 }
 
+// updateTgbotEnableSts enables or disables the Telegram bot notifications based on the status parameter.
 func updateTgbotEnableSts(status bool) {
 	settingService := service.SettingService{}
 	currentTgSts, err := settingService.GetTgbotEnabled()
@@ -196,6 +202,7 @@ func updateTgbotEnableSts(status bool) {
 	}
 }
 
+// updateTgbotSetting updates Telegram bot settings including token, chat ID, and runtime schedule.
 func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime string) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
@@ -233,7 +240,8 @@ func updateTgbotSetting(tgBotToken string, tgBotChatid string, tgBotRuntime stri
 	}
 }
 
-func updateSetting(port int, username string, password string, webBasePath string, listenIP string) {
+// updateSetting updates various panel settings including port, credentials, base path, listen IP, and two-factor authentication.
+func updateSetting(port int, username string, password string, webBasePath string, listenIP string, resetTwoFactor bool) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
 		fmt.Println("Database initialization failed:", err)
@@ -270,6 +278,17 @@ func updateSetting(port int, username string, password string, webBasePath strin
 		}
 	}
 
+	if resetTwoFactor {
+		err := settingService.SetTwoFactorEnable(false)
+
+		if err != nil {
+			fmt.Println("Failed to reset two-factor authentication:", err)
+		} else {
+			settingService.SetTwoFactorToken("")
+			fmt.Println("Two-factor authentication reset successfully")
+		}
+	}
+
 	if listenIP != "" {
 		err := settingService.SetListen(listenIP)
 		if err != nil {
@@ -280,6 +299,7 @@ func updateSetting(port int, username string, password string, webBasePath strin
 	}
 }
 
+// updateCert updates the SSL certificate files for the panel.
 func updateCert(publicKey string, privateKey string) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
@@ -307,6 +327,7 @@ func updateCert(publicKey string, privateKey string) {
 	}
 }
 
+// GetCertificate displays the current SSL certificate settings if getCert is true.
 func GetCertificate(getCert bool) {
 	if getCert {
 		settingService := service.SettingService{}
@@ -324,6 +345,7 @@ func GetCertificate(getCert bool) {
 	}
 }
 
+// GetListenIP displays the current panel listen IP address if getListen is true.
 func GetListenIP(getListen bool) {
 	if getListen {
 
@@ -338,6 +360,7 @@ func GetListenIP(getListen bool) {
 	}
 }
 
+// migrateDb performs database migration operations for the 3x-ui panel.
 func migrateDb() {
 	inboundService := service.InboundService{}
 
@@ -350,6 +373,8 @@ func migrateDb() {
 	fmt.Println("Migration done!")
 }
 
+// main is the entry point of the 3x-ui application.
+// It parses command-line arguments to run the web server, migrate database, or update settings.
 func main() {
 	if len(os.Args) < 2 {
 		runWebServer()
@@ -377,6 +402,7 @@ func main() {
 	var reset bool
 	var show bool
 	var getCert bool
+	var resetTwoFactor bool
 	settingCmd.BoolVar(&reset, "reset", false, "Reset all settings")
 	settingCmd.BoolVar(&show, "show", false, "Display current settings")
 	settingCmd.IntVar(&port, "port", 0, "Set panel port number")
@@ -384,6 +410,7 @@ func main() {
 	settingCmd.StringVar(&password, "password", "", "Set login password")
 	settingCmd.StringVar(&webBasePath, "webBasePath", "", "Set base path for Panel")
 	settingCmd.StringVar(&listenIP, "listenIP", "", "set panel listenIP IP")
+	settingCmd.BoolVar(&resetTwoFactor, "resetTwoFactor", false, "Reset two-factor authentication settings")
 	settingCmd.BoolVar(&getListen, "getListen", false, "Display current panel listenIP IP")
 	settingCmd.BoolVar(&getCert, "getCert", false, "Display current certificate settings")
 	settingCmd.StringVar(&webCertFile, "webCert", "", "Set path to public key file for panel")
@@ -428,7 +455,7 @@ func main() {
 		if reset {
 			resetSetting()
 		} else {
-			updateSetting(port, username, password, webBasePath, listenIP)
+			updateSetting(port, username, password, webBasePath, listenIP, resetTwoFactor)
 		}
 		if show {
 			showSetting(show)

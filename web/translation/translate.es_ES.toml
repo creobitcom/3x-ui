@@ -50,6 +50,7 @@
 "fail" = "Falló"
 "comment" = "Comentario"
 "success" = "Éxito"
+"lastOnline" = "Última conexión"
 "getVersion" = "Obtener versión"
 "install" = "Instalar"
 "clients" = "Clientes"
@@ -71,6 +72,20 @@
 "emptyReverseDesc" = "No hay proxies inversos añadidos."
 "somethingWentWrong" = "Algo salió mal"
 
+[subscription]
+"title" = "Información de suscripción"
+"subId" = "ID de suscripción"
+"status" = "Estado"
+"downloaded" = "Descargado"
+"uploaded" = "Subido"
+"expiry" = "Caducidad"
+"totalQuota" = "Cuota total"
+"individualLinks" = "Enlaces individuales"
+"active" = "Activo"
+"inactive" = "Inactivo"
+"unlimited" = "Ilimitado"
+"noExpiry" = "Sin caducidad"
+
 [menu]
 "theme" = "Tema"
 "dark" = "Oscuro"
@@ -91,7 +106,7 @@
 "invalidFormData" = "El formato de los datos de entrada es inválido."
 "emptyUsername" = "Por favor ingresa el nombre de usuario."
 "emptyPassword" = "Por favor ingresa la contraseña."
-"wrongUsernameOrPassword" = "Nombre de usuario, contraseña o código de dos factores incorrecto."  
+"wrongUsernameOrPassword" = "Nombre de usuario, contraseña o código de dos factores incorrecto."
 "successLogin" = "Has iniciado sesión en tu cuenta correctamente."
 
 [pages.index]
@@ -117,8 +132,6 @@
 "operationHours" = "Tiempo de Funcionamiento"
 "systemLoad" = "Carga del Sistema"
 "systemLoadDesc" = "promedio de carga del sistema en los últimos 1, 5 y 15 minutos"
-"connectionTcpCountDesc" = "Conexiones TCP totales en todas las tarjetas de red."
-"connectionUdpCountDesc" = "Conexiones UDP totales en todas las tarjetas de red."
 "connectionCount" = "Número de Conexiones"
 "ipAddresses" = "Direcciones IP"
 "toggleIpVisibility" = "Alternar visibilidad de la IP"
@@ -128,11 +141,14 @@
 "totalData" = "Datos totales"
 "sent" = "Enviado"
 "received" = "Recibido"
+"documentation" = "Documentación"
 "xraySwitchVersionDialog" = "¿Realmente deseas cambiar la versión de Xray?"
 "xraySwitchVersionDialogDesc" = "Esto cambiará la versión de Xray a #version#."
 "xraySwitchVersionPopover" = "Xray se actualizó correctamente"
 "geofileUpdateDialog" = "¿Realmente deseas actualizar el geofichero?"
 "geofileUpdateDialogDesc" = "Esto actualizará el archivo #filename#."
+"geofilesUpdateDialogDesc" = "Esto actualizará todos los archivos."
+"geofilesUpdateAll" = "Actualizar todo"
 "geofileUpdatePopover" = "Geofichero actualizado correctamente"
 "dontRefresh" = "La instalación está en progreso, por favor no actualices esta página."
 "logs" = "Registros"
@@ -150,6 +166,8 @@
 "getConfigError" = "Ocurrió un error al obtener el archivo de configuración"
 
 [pages.inbounds]
+"allTimeTraffic" = "Tráfico Total"
+"allTimeTrafficUsage" = "Uso total de todos los tiempos"
 "title" = "Entradas"
 "totalDownUp" = "Subidas/Descargas Totales"
 "totalUsage" = "Uso Total"
@@ -159,10 +177,13 @@
 "remark" = "Notas"
 "protocol" = "Protocolo"
 "port" = "Puerto"
+"portMap" = "Puertos de Destino"
 "traffic" = "Tráfico"
 "details" = "Detalles"
 "transportConfig" = "Transporte"
 "expireDate" = "Fecha de Expiración"
+"createdAt" = "Creado"
+"updatedAt" = "Actualizado"
 "resetTraffic" = "Restablecer Tráfico"
 "addInbound" = "Agregar Entrada"
 "generalActions" = "Acciones Generales"
@@ -174,8 +195,6 @@
 "deleteClient" = "Eliminar cliente"
 "deleteClientContent" = "¿Está seguro de que desea eliminar el cliente?"
 "resetTrafficContent" = "¿Confirmar restablecimiento de tráfico?"
-"inboundUpdateSuccess" = "La entrada se ha actualizado correctamente."
-"inboundCreateSuccess" = "La entrada se ha creado correctamente."
 "copyLink" = "Copiar Enlace"
 "address" = "Dirección"
 "network" = "Red"
@@ -225,6 +244,9 @@
 "exportInbound" = "Exportación entrante"
 "import" = "Importar"
 "importInbound" = "Importar un entrante"
+"periodicTrafficResetTitle" = "Reset de Tráfico"
+"periodicTrafficResetDesc" = "Reiniciar automáticamente el contador de tráfico en intervalos especificados"
+"lastReset" = "Último reinicio"
 
 [pages.client]
 "add" = "Agregar Cliente"
@@ -244,6 +266,12 @@
 "renew" = "Renovación automática"
 "renewDesc" = "Renovación automática después de la expiración. (0 = desactivar) (unidad: día)"
 
+[pages.inbounds.periodicTrafficReset]
+"never" = "Nunca"
+"daily" = "Diariamente"
+"weekly" = "Semanalmente"
+"monthly" = "Mensualmente"
+
 [pages.inbounds.toasts]
 "obtain" = "Recibir"
 "updateSuccess" = "La actualización fue exitosa"
@@ -261,6 +289,8 @@
 "resetInboundClientTrafficSuccess" = "El tráfico ha sido reiniciado"
 "trafficGetError" = "Error al obtener los tráficos"
 "getNewX25519CertError" = "Error al obtener el certificado X25519."
+"getNewmldsa65Error" = "Error al obtener el certificado mldsa65."
+"getNewVlessEncError" = "Error al obtener el certificado VlessEnc."
 
 [pages.inbounds.stream.general]
 "request" = "Pedido"
@@ -341,6 +371,7 @@
 "subSettings" = "Suscripción"
 "subEnable" = "Habilitar Servicio"
 "subEnableDesc" = "Función de suscripción con configuración separada."
+"subJsonEnable" = "Habilitar/Deshabilitar el endpoint de suscripción JSON de forma independiente."
 "subTitle" = "Título de la Suscripción"
 "subTitleDesc" = "Título mostrado en el cliente de VPN"
 "subListen" = "Listening IP"
@@ -401,7 +432,6 @@
 "generalConfigsDesc" = "Estas opciones proporcionarán ajustes generales."
 "logConfigs" = "Registro"
 "logConfigsDesc" = "Los registros pueden afectar la eficiencia de su servidor. Se recomienda habilitarlos sabiamente solo en caso de sus necesidades."
-"blockConfigs" = "Configuraciones de Bloqueo"
 "blockConfigsDesc" = "Estas opciones evitarán que los usuarios se conecten a protocolos y sitios web específicos."
 "basicRouting" = "Enrutamiento Básico"
 "blockConnectionsConfigsDesc" = "Estas opciones bloquearán el tráfico según el país solicitado específico."
@@ -421,9 +451,6 @@
 "RoutingStrategy" = "Configurar Estrategia de Enrutamiento de Dominios"
 "RoutingStrategyDesc" = "Establece la estrategia general de enrutamiento para la resolución de DNS."
 "Torrent" = "Prohibir Uso de BitTorrent"
-"TorrentDesc" = "Cambia la plantilla de configuración para evitar el uso de BitTorrent por parte de los usuarios."
-"Family" = "Bloquee malware y contenido para adultos"
-"FamilyDesc" = "Resolutores de DNS de Cloudflare para bloquear malware y contenido para adultos para protección familiar."
 "Inbounds" = "Entrante"
 "InboundsDesc" = "Cambia la plantilla de configuración para aceptar clientes específicos."
 "Outbounds" = "Salidas"
@@ -523,6 +550,12 @@
 "edit" = "Editar Servidor"
 "domains" = "Dominios"
 "expectIPs" = "IPs esperadas"
+"unexpectIPs" = "IPs inesperadas"
+"useSystemHosts" = "Usar Hosts del sistema"
+"useSystemHostsDesc" = "Usar el archivo hosts de un sistema instalado"
+"usePreset" = "Usar plantilla"
+"dnsPresetTitle" = "Plantillas DNS"
+"dnsPresetFamily" = "Familiar"
 
 [pages.xray.fakedns]
 "add" = "Agregar DNS Falso"
@@ -532,15 +565,17 @@
 
 [pages.settings.security]
 "admin" = "Credenciales de administrador"
-"twoFactor" = "Autenticación de dos factores"  
-"twoFactorEnable" = "Habilitar 2FA"  
-"twoFactorEnableDesc" = "Añade una capa adicional de autenticación para mayor seguridad."  
+"twoFactor" = "Autenticación de dos factores"
+"twoFactorEnable" = "Habilitar 2FA"
+"twoFactorEnableDesc" = "Añade una capa adicional de autenticación para mayor seguridad."
 "twoFactorModalSetTitle" = "Activar autenticación de dos factores"
 "twoFactorModalDeleteTitle" = "Desactivar autenticación de dos factores"
 "twoFactorModalSteps" = "Para configurar la autenticación de dos factores, sigue estos pasos:"
 "twoFactorModalFirstStep" = "1. Escanea este código QR en la aplicación de autenticación o copia el token cerca del código QR y pégalo en la aplicación"
 "twoFactorModalSecondStep" = "2. Ingresa el código de la aplicación"
 "twoFactorModalRemoveStep" = "Ingresa el código de la aplicación para eliminar la autenticación de dos factores."
+"twoFactorModalChangeCredentialsTitle" = "Cambiar credenciales"
+"twoFactorModalChangeCredentialsStep" = "Ingrese el código de la aplicación para cambiar las credenciales del administrador."
 "twoFactorModalSetSuccess" = "La autenticación de dos factores se ha establecido con éxito"
 "twoFactorModalDeleteSuccess" = "La autenticación de dos factores se ha eliminado con éxito"
 "twoFactorModalError" = "Código incorrecto"
@@ -556,23 +591,24 @@
 "resetOutboundTrafficError" = "Error al reiniciar el tráfico saliente"
 
 [tgbot]
-"keyboardClosed" = "❌ ¡Teclado personalizado cerrado!"
-"noResult" = "❗ ¡Sin resultados!"
-"noQuery" = "❌ ¡Consulta no encontrada! ¡Por favor utiliza el comando nuevamente!"
+"keyboardClosed" = "❌ Teclado cerrado!"
+"noResult" = "❗ ¡No hay resultados!"
+"noQuery" = "❌ ¡Consulta no encontrada! ¡Por favor, use el comando de nuevo!"
 "wentWrong" = "❌ ¡Algo salió mal!"
-"noIpRecord" = "❗ ¡Sin Registro de IP!"
+"noIpRecord" = "❗ ¡No hay registro de IP!"
 "noInbounds" = "❗ ¡No se encontraron entradas!"
-"unlimited" = "♾ Ilimitado"
-"add" = "Agregar"
+"unlimited" = "♾ Ilimitado (Restablecer)"
+"add" = "Añadir"
 "month" = "Mes"
 "months" = "Meses"
 "day" = "Día"
 "days" = "Días"
 "hours" = "Horas"
+"minutes" = "Minutos"
 "unknown" = "Desconocido"
 "inbounds" = "Entradas"
 "clients" = "Clientes"
-"offline" = "🔴 Sin conexión"
+"offline" = "🔴 Desconectado"
 "online" = "🟢 En línea"
 
 [tgbot.commands]
@@ -590,6 +626,10 @@
 "restartSuccess" = "✅ ¡Operación exitosa!"
 "restartFailed" = "❗ Error en la operación.\r\n\r\n<code>Error: {{ .Error }}</code>."
 "xrayNotRunning" = "❗ Xray Core no está en ejecución."
+"startDesc" = "Mostrar el menú principal"
+"helpDesc" = "Ayuda del bot"
+"statusDesc" = "Comprobar el estado del bot"
+"idDesc" = "Mostrar tu ID de Telegram"
 
 [tgbot.messages]
 "cpuThreshold" = "🔴 El uso de CPU {{ .Percent }}% es mayor que el umbral {{ .Threshold }}%"
@@ -637,7 +677,6 @@
 "refreshedOn" = "\r\n📋🔄 Actualizado en: {{ .Time }}\r\n\r\n"
 "yes" = "✅ Sí"
 "no" = "❌ No"
-
 "received_id" = "🔑📥 ID actualizado."
 "received_password" = "🔑📥 Contraseña actualizada."
 "received_email" = "📧📥 Correo electrónico actualizado."
@@ -656,7 +695,6 @@
 "SuccessResetTraffic" = "📧 Correo: {{ .ClientEmail }}\n🏁 Resultado: ✅ Éxito"
 "FailedResetTraffic" = "📧 Correo: {{ .ClientEmail }}\n🏁 Resultado: ❌ Fallido \n\n🛠️ Error: [ {{ .ErrorMessage }} ]"
 "FinishProcess" = "🔚 Proceso de reinicio de tráfico finalizado para todos los clientes."
-
 
 [tgbot.buttons]
 "closeKeyboard" = "❌ Cerrar Teclado"
@@ -691,7 +729,6 @@
 "limitTraffic" = "🚧 Límite de tráfico"
 "getBanLogs" = "Registros de prohibición"
 "allClients" = "Todos los Clientes"
-
 "addClient" = "Añadir cliente"
 "submitDisable" = "Enviar como deshabilitado ☑️"
 "submitEnable" = "Enviar como habilitado ✅"
@@ -702,7 +739,6 @@
 "change_comment" = "⚙️💬 Comentario"
 "ResetAllTraffics" = "Reiniciar todo el tráfico"
 "SortedTrafficUsageReport" = "Informe de uso de tráfico ordenado"
-
 
 [tgbot.answers]
 "successfulOperation" = "✅ ¡Exitosa!"

@@ -11,6 +11,8 @@ import (
 	"path"
 	"slices"
 
+	"gorm.io/driver/mysql"
+
 	"github.com/mhsanaei/3x-ui/v2/config"
 	"github.com/mhsanaei/3x-ui/v2/database/model"
 	"github.com/mhsanaei/3x-ui/v2/util/crypto"
@@ -120,10 +122,20 @@ func isTableEmpty(tableName string) (bool, error) {
 
 // InitDB sets up the database connection, migrates models, and runs seeders.
 func InitDB(dbPath string) error {
-	dir := path.Dir(dbPath)
-	err := os.MkdirAll(dir, fs.ModePerm)
+	dbConfig, err := config.GetDatabaseConfig()
 	if err != nil {
 		return err
+	}
+
+	if dbConfig.Connection != "mysql" {
+		// Connection is sqlite
+		// Need to create the directory if it doesn't exist
+
+		dir := path.Dir(dbPath)
+		err = os.MkdirAll(dir, fs.ModePerm)
+		if err != nil {
+			return err
+		}
 	}
 
 	var gormLogger logger.Interface
@@ -137,9 +149,18 @@ func InitDB(dbPath string) error {
 	c := &gorm.Config{
 		Logger: gormLogger,
 	}
-	db, err = gorm.Open(sqlite.Open(dbPath), c)
-	if err != nil {
-		return err
+
+	if dbConfig.Connection == "mysql" {
+		db, err = gorm.Open(mysql.Open(dbPath), c)
+		if err != nil {
+			return err
+		}
+	} else {
+		// Connection is sqlite
+		db, err = gorm.Open(sqlite.Open(dbPath), c)
+		if err != nil {
+			return err
+		}
 	}
 
 	if err := initModels(); err != nil {

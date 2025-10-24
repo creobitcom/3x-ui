@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: 3xui_app
+    env_file: .env
     volumes:
       - $PWD/db/:/etc/x-ui/
       - $PWD/cert/:/root/cert/
